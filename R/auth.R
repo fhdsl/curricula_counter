@@ -1,5 +1,5 @@
 #' Authorize R package to access endpoints
-#' @description This is a function to authorize the R package to access APIs interactively. To learn more about the privacy policy for metricminer [read here](https://www.metricminer.org/privacypolicy.html)
+#' @description This is a function to authorize the R package to access APIs interactively. To learn more about the privacy policy for curricula_counter [read here](https://www.curricula_counter.org/privacypolicy.html)
 #' @param app_name app would you like to authorize? Supported apps are 'google' 'calendly' and 'github'
 #' @param cache Should the token be cached as an .httr-oauth file or API keys stored as global options?
 #' @param ... Additional arguments to send to \code{\link{oauth2.0_token}}
@@ -49,7 +49,7 @@ authorize <- function(app_name = NULL,
     message("Would you like to store/cache your credentials?")
     cache_it <- menu(c("Yes cache/store credentials", "No do not store credentials, I will re-run this authorize() in my next R session"))
     if (cache_it == 1) {
-      message("You chose to cache your credentials, if you change your mind, run metricminer::delete_creds(). \nBe careful not to push the cache files to GitHub or share it anywhere. \n")
+      message("You chose to cache your credentials, if you change your mind, run curricula_counter::delete_creds(). \nBe careful not to push the cache files to GitHub or share it anywhere. \n")
     }
   } else {
     cache_it <- 1
@@ -69,7 +69,7 @@ authorize <- function(app_name = NULL,
 
   if (app_name == "github") {
     # Open up browser to have them create a key
-    browseURL("https://github.com/settings/tokens/new?description=METRICMINER_GITHUB_PAT&scopes=repo,read:packages,read:org")
+    browseURL("https://github.com/settings/tokens/new?description=curricula_counter_GITHUB_PAT&scopes=repo,read:packages,read:org")
     message("On the opened page, scroll down and click 'Generate Token'.")
 
     # Store api key here
@@ -104,8 +104,8 @@ authorize <- function(app_name = NULL,
 }
 
 ################################################################################
-#' Delete cached metricminer credentials
-#' @description This is a function to delete cached creds and creds in the current environment that were set by metricminer
+#' Delete cached curricula_counter credentials
+#' @description This is a function to delete cached creds and creds in the current environment that were set by curricula_counter
 #' @param app_name which app would you like to delete the creds for? Default is to delete the creds for all.
 #' @export
 #' @return Cached credentials are deleted and report is given back
@@ -134,7 +134,7 @@ delete_creds <- function(app_name = "all") {
   )
 
   if (none_exist) {
-    message("No cached creds to delete (from metricminer anyway). Done")
+    message("No cached creds to delete (from curricula_counter anyway). Done")
   } else {
     if (app_name == "all" | app_name == "calendly") {
       if (calendly_creds_exist) {
@@ -170,7 +170,7 @@ delete_creds <- function(app_name = "all") {
 }
 
 #' Use secrets to Authorize R package to access endpoints
-#' @description This is a function to authorize metricminer to access calendly, github or google noninteractively from passing in a keys or tokens.
+#' @description This is a function to authorize curricula_counter to access calendly, github or google noninteractively from passing in a keys or tokens.
 #' @param app_name Which app are you trying to authorize? 'google', 'calendly' or 'github'?
 #' @param token For calendly or github, pass in the API key or Personal Access Token that you have set up from going to https://github.com/settings/tokens/new or https://calendly.com/integrations/api_webhooks respectively.
 #' @param cache Should the credentials be cached? TRUE or FALSE?
@@ -232,7 +232,7 @@ auth_from_secret <- function(app_name, token, access_token, refresh_token, cache
   }
 
   if (cache) {
-    message("You chose to cache your credentials, if you change your mind, run metricminer::delete_creds().
+    message("You chose to cache your credentials, if you change your mind, run curricula_counter::delete_creds().
             \n Be careful not to push .httr-oauth or RDS files to GitHub or share it anywhere.")
     cache_token(token, app_name = app_name)
   }
@@ -256,7 +256,7 @@ app_set_up <- function(app_name = "google") {
   )
 
   app <- httr::oauth_app(
-    appname = "metricminer",
+    appname = "curricula_counter",
     key = unserialize(decrypted)$client_id,
     secret = unserialize(decrypted)$client_secret
   )

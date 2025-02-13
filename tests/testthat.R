@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(metricminer)
+library(curricula_counter)
 
-test_check("metricminer")
+test_check("curricula_counter")

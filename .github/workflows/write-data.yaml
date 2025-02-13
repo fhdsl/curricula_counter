@@ -10,30 +10,30 @@ jobs:
     name: Write Data
     runs-on: ubuntu-latest
     container:
-      image: cansav09/metricminer
+      image: cansav09/curricula_counter
 
     steps:
-      - name: Authorize metricminer
+      - name: Authorize curricula_counter
         env:
-          METRICMINER_GITHUB_PAT: ${{ secrets.METRICMINER_GITHUB_PAT }}
-          METRICMINER_GOOGLE_ACCESS: ${{ secrets.METRICMINER_GOOGLE_ACCESS }}
-          METRICMINER_GOOGLE_REFRESH: ${{ secrets.METRICMINER_GOOGLE_REFRESH }}
+          curricula_counter_GITHUB_PAT: ${{ secrets.curricula_counter_GITHUB_PAT }}
+          curricula_counter_GOOGLE_ACCESS: ${{ secrets.curricula_counter_GOOGLE_ACCESS }}
+          curricula_counter_GOOGLE_REFRESH: ${{ secrets.curricula_counter_GOOGLE_REFRESH }}
         run: |
           library(magrittr)
 
           # Authorize GitHub
-          metricminer::auth_from_secret("github", token = Sys.getenv("METRICMINER_GITHUB_PAT"))
+          curricula_counter::auth_from_secret("github", token = Sys.getenv("curricula_counter_GITHUB_PAT"))
 
           # Authorize Google
-          metricminer::auth_from_secret("google",
-                 refresh_token = Sys.getenv("METRICMINER_GOOGLE_REFRESH"),
-                 access_token = Sys.getenv("METRICMINER_GOOGLE_ACCESS"),
+          curricula_counter::auth_from_secret("google",
+                 refresh_token = Sys.getenv("curricula_counter_GOOGLE_REFRESH"),
+                 access_token = Sys.getenv("curricula_counter_GOOGLE_ACCESS"),
                  cache = TRUE
           )
           gsheet <- "https://docs.google.com/spreadsheets/d/1lk3vMgE4CNuACrI1mzHrv6AsvXbdhw1zJENMkIEhrZs/edit#gid=0"
           repos <- c(
-              "fhdsl/metricminer",
-              "fhdsl/metricminer.org",
+              "fhdsl/curricula_counter",
+              "fhdsl/curricula_counter.org",
               "jhudsl/ottrpal",
               "jhudsl/ari",
               "jhudsl/cow",
@@ -64,13 +64,13 @@ jobs:
               "fhdsl/OTTR_Quarto", 
               "fhdsl/OTTR_Quarto_Website"
           )
-          repo_metrics <- metricminer::get_multiple_repos_metrics(repo_names = repos, time_course = TRUE)
+          repo_metrics <- curricula_counter::get_multiple_repos_metrics(repo_names = repos, time_course = TRUE)
 
           combine_data <- googlesheets4::read_sheet(gsheet) %>%
             dplyr::bind_rows(repo_metrics) %>%
               dplyr::distinct()
 
-          datasheet <- metricminer::write_to_gsheet(gsheet = gsheet,
+          datasheet <- curricula_counter::write_to_gsheet(gsheet = gsheet,
             input = combine_data,
             overwrite = TRUE)
 

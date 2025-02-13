@@ -72,10 +72,10 @@ jobs:
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
-          METRICMINER_CALENDLY: ${{ secrets.METRICMINER_CALENDLY }}
-          METRICMINER_GITHUB_PAT: ${{ secrets.METRICMINER_GITHUB_PAT }}
-          METRICMINER_GOOGLE_ACCESS: ${{ secrets.METRICMINER_GOOGLE_ACCESS }}
-          METRICMINER_GOOGLE_REFRESH: ${{ secrets.METRICMINER_GOOGLE_REFRESH }}
+          curricula_counter_CALENDLY: ${{ secrets.curricula_counter_CALENDLY }}
+          curricula_counter_GITHUB_PAT: ${{ secrets.curricula_counter_GITHUB_PAT }}
+          curricula_counter_GOOGLE_ACCESS: ${{ secrets.curricula_counter_GOOGLE_ACCESS }}
+          curricula_counter_GOOGLE_REFRESH: ${{ secrets.curricula_counter_GOOGLE_REFRESH }}
         run: |
           options(crayon.enabled = TRUE)
           rcmdcheck::rcmdcheck(args = c("--no-manual"), check_dir = "check")

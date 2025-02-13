@@ -11,7 +11,7 @@ on:
         default: inst/extdata
         type: string
       tag:
-        description: 'Tag e.g. fhdsl/metricminer:main'
+        description: 'Tag e.g. fhdsl/curricula_counter:main'
         required: true
         type: string
       dockerhubpush:
